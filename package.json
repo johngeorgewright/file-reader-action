@@ -8,7 +8,7 @@
     ".": "./dist/index.js"
   },
   "scripts": {
-    "build": "esbuild src/main.ts --bundle --platform=node --outfile=dist/index.js",
+    "build": "esbuild src/main.ts --bundle --platform=node --format=esm --outfile=dist/index.js",
     "check": "tsc"
   },
   "repository": {
