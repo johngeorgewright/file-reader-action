@@ -5,11 +5,11 @@
   "description": "GitHub Action to read the contents of a file",
   "type": "module",
   "exports": {
-    ".": "./lib/main.js"
+    ".": "./dist/index.js"
   },
   "scripts": {
-    "build": "esbuild src/main.ts --bundle --platform=node --outfile=lib/main.js",
-    "check": "tsc --noEmit"
+    "build": "esbuild src/main.ts --bundle --platform=node --outfile=dist/index.js",
+    "check": "tsc"
   },
   "repository": {
     "type": "git",
