@@ -11,3 +11,23 @@ jobs:
           node-version-file: .nvmrc
       - run: npm ci
       - run: npm run check
+      - run: npm run build
+      - id: test
+        uses: ./
+        with:
+          path: action.yml
+      - uses: DamianReeves/write-file-action@v1.3
+        with:
+          path: fixture.yml
+          contents: ${{ steps.test.outputs.contents }}
+          write-mode: overwrite
+      - id: diff
+        uses: LouisBrunner/diff-action@v2.0.0
+        with:
+          old: action.yml
+          new: fixture.yml
+          mode: strict
+          tolerance: same
+          notify_issue: failure
+      - if: steps.diff.outputs.passed == 'false'
+        run: exit 1
