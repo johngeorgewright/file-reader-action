@@ -1,0 +1,40 @@
+name: pull-request
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+      - id: test
+        uses: ./
+        with:
+          path: .github/workflows/fixture.txt
+      - uses: DamianReeves/write-file-action@v1.3
+        with:
+          path: fixture.txt
+          contents: ${{ steps.test.outputs.contents }}
+          write-mode: overwrite
+      - id: diff
+        uses: LouisBrunner/diff-action@v3.0.0
+        with:
+          old: .github/workflows/fixture.txt
+          new: fixture.txt
+          mode: strict
+          tolerance: same
+          notify_issue: failure
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - if: steps.diff.outputs.passed == 'false'
+        run: exit 1
