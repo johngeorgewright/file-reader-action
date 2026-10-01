@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      issues: write
       pull-requests: write
     steps:
       - uses: actions/checkout@v7
@@ -27,7 +28,7 @@ jobs:
           contents: ${{ steps.test.outputs.contents }}
           write-mode: overwrite
       - id: diff
-        uses: LouisBrunner/diff-action@v2.0.0
+        uses: LouisBrunner/diff-action@v3.0.0
         with:
           old: action.yml
           new: fixture.yml
