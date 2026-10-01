@@ -25,7 +25,7 @@ jobs:
       - uses: DamianReeves/write-file-action@v1.3
         with:
           path: fixture.yml
-          contents: ${{ steps.test.outputs.contents }}
+          contents: ${{ steps.test.outputs.contents }}\n
           write-mode: overwrite
       - id: diff
         uses: LouisBrunner/diff-action@v3.0.0
