@@ -21,17 +21,17 @@ jobs:
       - id: test
         uses: ./
         with:
-          path: action.yml
+          path: .github/workflows/fixture.txt
       - uses: DamianReeves/write-file-action@v1.3
         with:
-          path: fixture.yml
-          contents: ${{ steps.test.outputs.contents }}\n
+          path: fixture.txt
+          contents: ${{ steps.test.outputs.contents }}
           write-mode: overwrite
       - id: diff
         uses: LouisBrunner/diff-action@v3.0.0
         with:
-          old: action.yml
-          new: fixture.yml
+          old: .github/workflows/fixture.txt
+          new: fixture.txt
           mode: strict
           tolerance: same
           notify_issue: failure
